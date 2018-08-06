@@ -299,6 +299,11 @@ struct lkl_test tests[] = {
 	LKL_TEST(stop_kernel),
 };
 
+int fi_is_blk_busy(void)
+{
+	return 0;
+}
+
 int main(int argc, const char **argv)
 {
 	if (parse_args(argc, argv, args) < 0)

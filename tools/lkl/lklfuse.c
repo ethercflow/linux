@@ -69,6 +69,11 @@ static void usage(void)
 );
 }
 
+int fi_is_blk_busy()
+{
+	return 0;
+}
+
 static int lklfuse_opt_proc(void *data, const char *arg, int key,
 			  struct fuse_args *args)
 {

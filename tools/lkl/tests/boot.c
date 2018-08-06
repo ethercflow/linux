@@ -548,6 +548,10 @@ struct lkl_test tests[] = {
 	LKL_TEST(stop_kernel),
 };
 
+int fi_is_blk_busy(void) {
+	return 0;
+}
+
 int main(int argc, const char **argv)
 {
 	lkl_host_ops.print = lkl_test_log;
