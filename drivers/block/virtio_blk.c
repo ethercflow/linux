@@ -269,16 +269,17 @@ static blk_status_t virtio_queue_rq(struct blk_mq_hw_ctx *hctx,
 
 	spin_lock_irqsave(&vblk->vqs[qid].lock, flags);
 
-	if (fi_is_blk_busy()) {
-		err = -ENOMEM;
-		goto fi_enomem;
-	}
 
 	if (blk_rq_is_scsi(req))
 		err = virtblk_add_req_scsi(vblk->vqs[qid].vq, vbr, vbr->sg, num);
 	else
 		err = virtblk_add_req(vblk->vqs[qid].vq, vbr, vbr->sg, num);
-fi_enomem:
+
+	if (fi_is_blk_busy()) {
+		err = -ENOMEM;
+		printk(KERN_INFO "set blk busy");
+	}
+
 	if (err) {
 		virtqueue_kick(vblk->vqs[qid].vq);
 		blk_mq_stop_hw_queue(hctx);

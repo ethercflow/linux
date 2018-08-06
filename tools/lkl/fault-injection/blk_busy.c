@@ -99,7 +99,7 @@ int main(void)
 
         disk_id = ret;
 
-        lkl_start_kernel(&lkl_host_ops, "mem=100M");
+        lkl_start_kernel(&lkl_host_ops, "mem=1000M");
 
         ret = lkl_mount_dev(disk_id, FULL_DISK, "ext4", MOUNT_FLAGS, MOUNT_OPTS,
                         mnt_point, sizeof(mnt_point));
@@ -118,29 +118,29 @@ int main(void)
         pthread_create(&tid, &tattr, writer, fpath);
 
         sleep(10);
-        do {
-                ret = pthread_cancel(tid);
-        } while (ret == 0);
-        fprintf(stderr, "pthread_cancel: %s\n", lkl_strerror(ret));
+        // do {
+        //         ret = pthread_cancel(tid);
+        // } while (ret == 0);
+        // fprintf(stderr, "pthread_cancel: %s\n", lkl_strerror(ret));
 
-        fd = lkl_sys_open(fpath, LKL_O_RDONLY, 0);
-        if (fd < 0) {
-                fprintf(stderr, "open file %s for reading failed: %s\n",
-                        fpath, lkl_strerror(fd));
-                return -1;
-        }
+        // fd = lkl_sys_open(fpath, LKL_O_RDONLY, 0);
+        // if (fd < 0) {
+        //         fprintf(stderr, "open file %s for reading failed: %s\n",
+        //                 fpath, lkl_strerror(fd));
+        //         return -1;
+        // }
 
-        fprintf(stderr, "begin to read file\n");
-        ret = lkl_sys_read(fd, rbuf, PAGE_SIZE * 2);
-        if (ret < 0) {
-                fprintf(stderr, "read file %s failed: %s\n",
-                        fpath, lkl_strerror(fd));
-                return -1;
-        }
+        // fprintf(stderr, "begin to read file\n");
+        // ret = lkl_sys_read(fd, rbuf, PAGE_SIZE * 2);
+        // if (ret < 0) {
+        //         fprintf(stderr, "read file %s failed: %s\n",
+        //                 fpath, lkl_strerror(fd));
+        //         return -1;
+        // }
 
-        fprintf(stderr, "read %d, data: %s\n", ret, rbuf);
+        // fprintf(stderr, "read %d, data: %s\n", ret, rbuf);
 
-	sleep(20);
+        // sleep(10);
 
         close(disk.fd);
 
